@@ -1,0 +1,15 @@
+grammar reva.RevaDsl with org.eclipse.xtext.xbase.Xbase
+
+generate revaDsl "http://www.RevaDsl.reva"
+import "http://www.eclipse.org/xtext/xbase/Xbase" as xbase
+
+Model returns xbase::XBlockExpression:
+	{Model} (expressions+=XExpressionOrVarDeclaration ';'?)*;
+
+PrintExpression returns xbase::XExpression:
+	{PrintExpression} 'print' expression=XExpression;
+
+@Override
+XPrimaryExpression returns xbase::XExpression:
+	PrintExpression |
+	super;

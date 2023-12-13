@@ -1,0 +1,11 @@
+dependencies {
+	api project(':reva')
+	api "org.eclipse.xtext:org.eclipse.xtext.ide:${xtextVersion}"
+	api "org.eclipse.xtext:org.eclipse.xtext.xbase.ide:${xtextVersion}"
+}
+
+apply plugin: 'application'
+application {
+	mainClass = "org.eclipse.xtext.ide.server.ServerLauncher"
+}
+

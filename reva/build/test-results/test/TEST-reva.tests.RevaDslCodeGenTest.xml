@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="reva.tests.RevaDslCodeGenTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2023-12-11T19:31:49" hostname="LP-NEERAJ-B" time="0.02">
+  <properties/>
+  <testcase name="test()" classname="reva.tests.RevaDslCodeGenTest" time="0.02">
+    <failure message="java.lang.NullPointerException: Cannot invoke &quot;org.eclipse.xtext.xbase.testing.CompilationTestHelper.assertCompilesTo(java.lang.CharSequence, java.lang.CharSequence)&quot; because &quot;this._compilationTestHelper&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;org.eclipse.xtext.xbase.testing.CompilationTestHelper.assertCompilesTo(java.lang.CharSequence, java.lang.CharSequence)&quot; because &quot;this._compilationTestHelper&quot; is null
+	at reva.tests.RevaDslCodeGenTest.test(RevaDslCodeGenTest.java:35)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+</failure>
+  </testcase>
+  <system-out><![CDATA[null
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
