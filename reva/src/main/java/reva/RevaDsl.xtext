@@ -9,7 +9,11 @@ Model returns xbase::XBlockExpression:
 PrintExpression returns xbase::XExpression:
 	{PrintExpression} 'print' expression=XExpression;
 
+RepeatExpression returns xbase::XExpression:
+	{RepeatExpression} 'repeat' expression=XBlockExpression count=XNumberLiteral 'times';
+
 @Override
 XPrimaryExpression returns xbase::XExpression:
 	PrintExpression |
+	RepeatExpression | 
 	super;
