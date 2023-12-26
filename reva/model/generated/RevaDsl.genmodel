@@ -10,5 +10,9 @@
     <genClasses ecoreClass="RevaDsl.ecore#//PrintExpression">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RevaDsl.ecore#//PrintExpression/expression"/>
     </genClasses>
+    <genClasses ecoreClass="RevaDsl.ecore#//RepeatExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RevaDsl.ecore#//RepeatExpression/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RevaDsl.ecore#//RepeatExpression/count"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

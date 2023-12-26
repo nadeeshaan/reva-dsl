@@ -45,7 +45,7 @@ class RevaDslJvmModelInferrer extends AbstractModelInferrer {
 		]
 	}
 
-	def String className(Model model) {
+	private def String getClassName(Model model) {
 		val jvmGenericType = associations.getJvmElements(model).
 			findFirst[it instanceof JvmGenericType] as JvmGenericType
 		return jvmGenericType.identifier
