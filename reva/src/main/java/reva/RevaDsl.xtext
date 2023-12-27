@@ -15,5 +15,5 @@ RepeatExpression returns xbase::XExpression:
 @Override
 XPrimaryExpression returns xbase::XExpression:
 	PrintExpression |
-	RepeatExpression | 
+	RepeatExpression |
 	super;
