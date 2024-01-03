@@ -21,25 +21,20 @@ class RevaDslCodeGenTest {
 		'''
 		print "Hello, World 123!"'''.compile
 	}
-	
-	@Disabled
+
+	@Test
 	def void test2() {
 		'''
 		print { 
 			print "Hello, World 123!"
 			print "Hello, World 123!"
-		 }'''.compile
+			}'''.compile
 	}
 
 	@Disabled
 	def void testRepeat() {
 		'''repeat { print "Hello, World 123!" + i } 5 times'''.compile
 	}
-	
-	
-	
-	
-	
 
 	def compile(CharSequence source) throws IOException {
 		compile(source, [

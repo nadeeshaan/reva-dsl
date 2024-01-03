@@ -1,6 +1,5 @@
 package reva.compiler;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.xbase.XBlockExpression;
 import org.eclipse.xtext.xbase.XExpression;
 import org.eclipse.xtext.xbase.XNumberLiteral;
@@ -27,39 +26,7 @@ public class RevaDslCompiler extends XbaseCompiler {
 
 	private void doInternalToJavaStatement(PrintExpression printExpr, ITreeAppendable a, boolean isReferenced) {
 		if (printExpr.getExpression() instanceof XBlockExpression) {
-			var expr = (XBlockExpression) printExpr.getExpression();
-			a = a.trace(expr, false);
-			if (expr.getExpressions().isEmpty())
-				return;
-			if (expr.getExpressions().size() == 1) {
-				internalToJavaStatement(expr.getExpressions().get(0), a, isReferenced);
-				return;
-			}
-			if (isReferenced)
-				declareSyntheticVariable(expr, a);
-			boolean needsBraces = isReferenced || !bracesAreAddedByOuterStructure(expr);
-			if (needsBraces) {
-				a.newLine().append("{").increaseIndentation();
-				a.openPseudoScope();
-			}
-			final EList<XExpression> expressions = expr.getExpressions();
-			for (int i = 0; i < expressions.size(); i++) {
-				XExpression ex = expressions.get(i);
-				if (i < expressions.size() - 1) {
-					internalToJavaStatement(ex, a, false);
-				} else {
-					internalToJavaStatement(ex, a, isReferenced);
-					if (isReferenced) {
-						a.newLine().append(getVarName(expr, a)).append(" = ");
-						internalToConvertedExpression(ex, a, getLightweightType(expr));
-						a.append(";");
-					}
-				}
-			}
-			if (needsBraces) {
-				a.closeScope();
-				a.decreaseIndentation().newLine().append("}");
-			}
+			super.doInternalToJavaStatement(printExpr.getExpression(), a, isReferenced);
 		} else {
 			internalToJavaStatement(printExpr.getExpression(), a, true);
 			newLine(a);
