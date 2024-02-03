@@ -18,5 +18,4 @@ public class RevaDslIdeSetup extends RevaDslStandaloneSetup {
 	public Injector createInjector() {
 		return Guice.createInjector(Modules2.mixin(new RevaDslRuntimeModule(), new RevaDslIdeModule()));
 	}
-	
 }
