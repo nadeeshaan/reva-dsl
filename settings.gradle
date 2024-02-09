@@ -1,3 +1,9 @@
+pluginManagement {
+    plugins {
+        id 'io.freefair.lombok' version "${lombokVersion}"
+    }
+}
+
 include 'reva'
 include 'reva.ide'
 include 'reva.ls'
