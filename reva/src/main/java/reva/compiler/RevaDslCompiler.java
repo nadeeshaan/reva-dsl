@@ -5,9 +5,11 @@ import org.eclipse.xtext.xbase.XExpression;
 import org.eclipse.xtext.xbase.XNumberLiteral;
 import org.eclipse.xtext.xbase.compiler.XbaseCompiler;
 import org.eclipse.xtext.xbase.compiler.output.ITreeAppendable;
+import org.eclipse.xtext.xbase.typesystem.references.LightweightTypeReference;
 
 import reva.revaDsl.PrintExpression;
 import reva.revaDsl.RepeatExpression;
+import reva.revaDsl.XVariableDeclaration;
 
 public class RevaDslCompiler extends XbaseCompiler {
 
@@ -19,9 +21,42 @@ public class RevaDslCompiler extends XbaseCompiler {
 			doInternalToJavaStatement((PrintExpression) obj, a, isReferenced);
 		} else if (obj instanceof RepeatExpression) {
 			doInternalToJavaStatement((RepeatExpression) obj, a, isReferenced);
+		} else if (obj instanceof XVariableDeclaration) {
+			doInternalToJavaStatement((XVariableDeclaration) obj, a, isReferenced);
 		} else {
 			super.doInternalToJavaStatement(obj, a, isReferenced);
 		}
+	}
+
+	private void doInternalToJavaStatement(XVariableDeclaration expr, ITreeAppendable a, boolean isReferenced) {
+		if (expr.getRight() != null) {
+			internalToJavaStatement(expr.getRight(), a, true);
+		}
+
+		a.newLine();
+		LightweightTypeReference type = appendVariableTypeAndName(expr, a);
+		a.append(" = ");
+		if (expr.getRight() != null) {
+			internalToConvertedExpression(expr.getRight(), a, type);
+		} else {
+			appendDefaultLiteral(a, type);
+		}
+		a.append(";");
+	}
+
+	protected LightweightTypeReference appendVariableTypeAndName(XVariableDeclaration varDeclaration,
+			ITreeAppendable appendable) {
+		if (!varDeclaration.isWriteable()) {
+			appendable.append("final ");
+		}
+		LightweightTypeReference type = getLightweightType(varDeclaration.getRight());
+		if (type.isAny()) {
+			type = getTypeForVariableDeclaration(varDeclaration.getRight());
+		}
+		appendable.append(type);
+		appendable.append(" ");
+		appendable.append(appendable.declareVariable(varDeclaration, makeJavaIdentifier(varDeclaration.getName())));
+		return type;
 	}
 
 	private void doInternalToJavaStatement(PrintExpression printExpr, ITreeAppendable a, boolean isReferenced) {

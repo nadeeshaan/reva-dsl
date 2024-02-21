@@ -1,16 +1,25 @@
 grammar reva.RevaDsl with org.eclipse.xtext.xbase.Xbase
 
-generate revaDsl "http://www.RevaDsl.reva"
+import "http://www.RevaDsl.reva"
 import "http://www.eclipse.org/xtext/xbase/Xbase" as xbase
 
 Model returns xbase::XBlockExpression:
 	{Model} (expressions+=XExpressionOrVarDeclaration ';'?)*;
+
+@Override 
+XExpressionOrVarDeclaration returns xbase::XExpression:
+	XVariableDeclaration | XExpression;
 
 PrintExpression returns xbase::XExpression:
 	{PrintExpression} 'print' expression=XExpression;
 
 RepeatExpression returns xbase::XExpression:
 	{RepeatExpression} 'repeat' expression=XBlockExpression count=XNumberLiteral 'times';
+
+@Override 
+XVariableDeclaration returns XExpression:
+	{XVariableDeclaration}
+	(writeable?='var') name=ValidID ('=' right=XExpression)?;
 
 @Override
 XPrimaryExpression returns xbase::XExpression:

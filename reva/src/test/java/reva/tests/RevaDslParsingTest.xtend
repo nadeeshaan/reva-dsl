@@ -12,6 +12,7 @@ import org.eclipse.xtext.xbase.testing.CompilationTestHelper
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.^extension.ExtendWith
+import org.junit.jupiter.api.Disabled
 
 @ExtendWith(InjectionExtension)
 @InjectWith(RevaDslInjectorProvider)
@@ -27,7 +28,7 @@ class RevaDslParsingTest {
 		println(compilationTestHelper)
 		
 		val result = parseHelper.parse('''
-			print "Hello!"
+			var name = "Neeraj"
 		''')
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors

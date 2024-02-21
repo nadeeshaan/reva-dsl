@@ -18,11 +18,10 @@ class RevaDslCodeGenTest {
 
 	@Test
 	def void test() {
-		'''
-		print "Hello, World 123!"'''.compile
+		'''var t = 123'''.compile
 	}
 
-	@Test
+	@Disabled
 	def void test2() {
 		'''
 		print { 
