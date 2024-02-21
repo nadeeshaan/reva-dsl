@@ -2,12 +2,15 @@ package reva.compiler;
 
 import org.eclipse.xtext.xbase.XBlockExpression;
 import org.eclipse.xtext.xbase.XExpression;
+import org.eclipse.xtext.xbase.typesystem.computation.ITypeComputationResult;
 import org.eclipse.xtext.xbase.typesystem.computation.ITypeComputationState;
 import org.eclipse.xtext.xbase.typesystem.computation.XbaseTypeComputer;
 import org.eclipse.xtext.xbase.typesystem.conformance.ConformanceFlags;
+import org.eclipse.xtext.xbase.typesystem.references.LightweightTypeReference;
 
 import reva.revaDsl.PrintExpression;
 import reva.revaDsl.RepeatExpression;
+import reva.revaDsl.XVariableDeclaration;
 
 public class RevaDslTypeComputer extends XbaseTypeComputer {
 
@@ -17,6 +20,8 @@ public class RevaDslTypeComputer extends XbaseTypeComputer {
 			computeTypesOf((PrintExpression) expr, state);
 		} else if (expr instanceof RepeatExpression) {
 			computeTypesOf((RepeatExpression) expr, state);
+		} else if (expr instanceof XVariableDeclaration) {
+			computeTypesOf((XVariableDeclaration) expr, state);
 		} else {
 			super.computeTypes(expr, state);
 		}
@@ -67,6 +72,23 @@ public class RevaDslTypeComputer extends XbaseTypeComputer {
 		// Expression was already resolved
 		// state.withNonVoidExpectation().computeTypes(repeat.getExpression());
 		state.computeTypes(repeat.getExpression());
+		state.acceptActualType(getPrimitiveVoid(state));
+	}
+
+	private void computeTypesOf(XVariableDeclaration expr, ITypeComputationState state) {
+		ITypeComputationState initializerState = state.withNonVoidExpectation();
+		initializerState.withinScope(expr);
+
+		ITypeComputationResult computedType = initializerState.computeTypes(expr.getRight());
+		LightweightTypeReference variableType = computedType.getActualExpressionType();
+
+		if (variableType != null) {
+			if (variableType.isPrimitiveVoid()) {
+				variableType = variableType.getOwner().newUnknownTypeReference();
+			}
+		}
+
+		state.assignType(expr, variableType, false);
 		state.acceptActualType(getPrimitiveVoid(state));
 	}
 

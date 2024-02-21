@@ -3,13 +3,27 @@
  */
 package reva;
 
+import org.eclipse.emf.ecore.EPackage;
+
+import com.google.inject.Injector;
+
+import reva.revaDsl.RevaDslPackage;
 
 /**
- * Initialization support for running Xtext languages without Equinox extension registry.
+ * Initialization support for running Xtext languages without Equinox extension
+ * registry.
  */
 public class RevaDslStandaloneSetup extends RevaDslStandaloneSetupGenerated {
 
 	public static void doSetup() {
 		new RevaDslStandaloneSetup().createInjectorAndDoEMFRegistration();
+	}
+
+	@Override
+	public void register(Injector injector) {
+		if (!EPackage.Registry.INSTANCE.containsKey("http://www.RevaDsl.reva")) {
+			EPackage.Registry.INSTANCE.put("http://www.RevaDsl.reva", RevaDslPackage.eINSTANCE);
+		}
+		super.register(injector);
 	}
 }

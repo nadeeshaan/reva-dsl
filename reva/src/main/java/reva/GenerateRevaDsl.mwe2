@@ -4,9 +4,10 @@ import org.eclipse.xtext.xtext.generator.*
 import org.eclipse.xtext.xtext.generator.model.project.*
 
 var rootPath = ".."
+var project = "reva"
 
 Workflow {
-	
+
 	component = XtextGenerator {
 		configuration = {
 			project = StandardProjectConfig {
@@ -30,21 +31,39 @@ Workflow {
 		language = StandardLanguage {
 			name = "reva.RevaDsl"
 			fileExtensions = "reva"
-
+			referencedResource = "platform:/resource/reva/model/custom/RevaDsl.genmodel"
 			serializer = {
 				generateStub = false
 			}
+
 			validator = {
-				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-				// Generates checks for @Deprecated grammar annotations, an IssueProvider and a corresponding PropertyPage
+			// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+			// Generates checks for @Deprecated grammar annotations, an IssueProvider and a corresponding PropertyPage
 				generateDeprecationValidation = true
 			}
+
 			generator = {
 				generateXtendStub = true
 			}
+
 			junitSupport = {
 				junitVersion = "5"
 			}
 		}
 	}
+	
+	// Initializes EMF support.
+    bean = org.eclipse.emf.mwe.utils.StandaloneSetup {
+        scanClassPath = true
+        platformUri = rootPath // platform uri for standalone execution
+    }
+
+    component = org.eclipse.emf.mwe.utils.DirectoryCleaner {
+        directory = "${rootPath}/${project}/src/main/emf-gen"
+    }
+
+    component = org.eclipse.emf.mwe2.ecore.EcoreGenerator auto-inject {
+        genModel = "platform:/resource/${project}/model/custom/RevaDsl.genmodel"
+        srcPath = "platform:/resource/${project}/src/main/java"
+    }
 }

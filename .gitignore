@@ -22,6 +22,7 @@ replay_pid*
 build.properties
 plugin.properties
 plugin.xml
+.classpath
 
 # Eclipse (Folders)
 bin/
@@ -30,6 +31,7 @@ xtext-gen/
 src-gen/
 emf-gen/
 META-INF/
+.settings/
 
 ### Gradle ###
 .gradle/**
