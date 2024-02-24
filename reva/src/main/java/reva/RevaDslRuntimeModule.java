@@ -8,6 +8,7 @@ import org.eclipse.xtext.xbase.typesystem.computation.ITypeComputer;
 
 import reva.compiler.RevaDslCompiler;
 import reva.compiler.RevaDslTypeComputer;
+import reva.config.RevaConfig;
 
 public class RevaDslRuntimeModule extends AbstractRevaDslRuntimeModule {
 
@@ -18,5 +19,8 @@ public class RevaDslRuntimeModule extends AbstractRevaDslRuntimeModule {
 	public Class<? extends ITypeComputer> bindITypeComputer() {
 		return RevaDslTypeComputer.class;
 	}
-
+	
+	public Class<RevaConfig> bindRevaConfig() {
+		return RevaConfig.class;
+	} 
 }

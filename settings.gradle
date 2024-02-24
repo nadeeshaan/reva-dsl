@@ -7,3 +7,4 @@ pluginManagement {
 include 'reva'
 include 'reva.ide'
 include 'reva.ls'
+include 'reva.config'
