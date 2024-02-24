@@ -11,8 +11,6 @@ import reva.ide.utils.switches.ComposedSwitchFactory;
 
 public class RevaContentProposalProvider extends XbaseIdeContentProposalProvider {
   @Inject ComposedSwitchFactory composedSwitchFactory;
-  
-  
 
   public void createProposals(
       Collection<ContentAssistContext> contexts, IIdeContentProposalAcceptor acceptor) {

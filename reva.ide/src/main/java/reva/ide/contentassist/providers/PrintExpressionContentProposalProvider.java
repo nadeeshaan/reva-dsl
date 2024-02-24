@@ -4,12 +4,11 @@ import com.google.inject.Inject;
 import java.util.Optional;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.ide.editor.contentassist.ContentAssistContext;
-import org.eclipse.xtext.ide.editor.contentassist.ContentAssistEntry;
 import org.eclipse.xtext.ide.editor.contentassist.IIdeContentProposalAcceptor;
 import org.eclipse.xtext.ide.editor.contentassist.IdeContentProposalCreator;
 import org.eclipse.xtext.ide.editor.contentassist.IdeContentProposalPriorities;
 import org.eclipse.xtext.nodemodel.INode;
-import reva.ide.contentassist.utils.ContentAssistUtils;
+import reva.config.RevaConfig;
 import reva.ide.utils.nodes.NodeUtils;
 import reva.revaDsl.PrintExpression;
 import reva.services.RevaDslGrammarAccess;
@@ -19,16 +18,13 @@ public class PrintExpressionContentProposalProvider extends RevaAbstractContentP
 
   @Inject IdeContentProposalPriorities proposalPriorities;
 
+  @Inject RevaConfig revaConfig;
+
   @Override
-  protected Boolean create(
+  public Boolean create(
       ContentAssistContext context,
       IIdeContentProposalAcceptor acceptor,
       IdeContentProposalCreator proposalCreator) {
-    ContentAssistEntry contentAssistEntry =
-        ContentAssistUtils.getContentAssistEntry(
-            context, "\"\"", "\"${0}\"", null, ContentAssistEntry.KIND_SNIPPET);
-    acceptor.accept(contentAssistEntry, proposalPriorities.getDefaultPriority(contentAssistEntry));
-
     return true;
   }
 
@@ -48,5 +44,10 @@ public class PrintExpressionContentProposalProvider extends RevaAbstractContentP
 
     String nodeText = nodeBeforeOffset.get().getText();
     return grammarAccess.getPrintExpressionAccess().getPrintKeyword_1().getValue().equals(nodeText);
+  }
+
+  @Override
+  protected String getContextName() {
+    return PrintExpression.class.getSimpleName();
   }
 }

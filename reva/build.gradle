@@ -9,6 +9,7 @@ dependencies {
 	
 	api "org.eclipse.xtext:org.eclipse.xtext:${xtextVersion}"
 	api "org.eclipse.xtext:org.eclipse.xtext.xbase:${xtextVersion}"
+	api project(':reva.config')
 }
 configurations {
 	mwe2 {
